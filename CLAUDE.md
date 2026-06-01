@@ -71,6 +71,12 @@ Three surfaces share the same engine:
 - PR descriptions briefly explain what changed and why.
 - Self-review the diff before merging.
 
+## Working style
+
+- **Never second guess.** When given a clear instruction, execute it
+   directly — no hedging, no re-litigating settled decisions, no offering
+   optional reformats the user did not ask for.
+
 ## What to avoid
 
 - Over-engineering. Build the simplest thing that solves the problem.
