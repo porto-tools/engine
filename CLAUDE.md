@@ -47,6 +47,41 @@ Three surfaces share the same engine:
 5. **If unsure whether something is a secret, treat it as one.** Ask the
    user before committing anything that looks credential-shaped.
 
+## Supply chain security
+
+Since March 2026, the TeamPCP / UNC6780 campaign has compromised 500+ npm
+packages by stealing CI/CD credentials and using them to publish malicious
+versions. These rules are non-negotiable for this project:
+
+1. **Package manager is pnpm, exclusively.** Not npm CLI, not bun. pnpm
+   provides install-script allowlisting (`onlyBuiltDependencies`) and
+   strict dependency resolution, both of which materially reduce
+   supply-chain exposure.
+
+2. **Exact version pinning.** No `^` or `~` ranges in `package.json`.
+   `pnpm-lock.yaml` is the source of truth and must be committed on every
+   dependency change.
+
+3. **Every new dependency requires a `docs/decisions/` entry** explaining
+   what problem it solves and why this dependency over alternatives.
+   `pnpm add <package>` is never a casual command.
+
+4. **GitHub Actions pinned to full commit SHAs**, never to tags. Tag
+   poisoning attacks have succeeded in the wild against this exact failure
+   mode. Use `uses: actions/checkout@<40-char-sha>`, not `@v4`.
+
+5. **Publishing to npm uses Trusted Publishing (OIDC)** between GitHub
+   Actions and npm. No npm tokens stored as GitHub secrets, ever. No
+   long-lived publish credentials anywhere.
+
+6. **2FA staging approval gate enabled** on first publish of any
+   `@porto-tools/*` package. Versions stage and require human 2FA approval
+   before becoming installable.
+
+7. **`pnpm audit` runs before every release**, alongside the
+   `/audit-privacy` and `/check-bundle` slash commands. Findings are
+   resolved or explicitly accepted with reasoning before deploy.
+
 ## Code quality expectations
 
 - Simple, readable architecture over clever abstractions.
