@@ -106,6 +106,23 @@ versions. These rules are non-negotiable for this project:
 - PR descriptions briefly explain what changed and why.
 - Self-review the diff before merging.
 
+**4. Worktree isolation for parallel work.** Parallel CC instances MUST
+operate in separate worktrees (`git worktree add <path> <branch>` from
+the main clone). Each instance launches *inside* its worktree
+directory — `cd <worktree-path>` or open that folder in the editor
+before starting CC. Operating from the shared root clone with parallel
+instances is the branch-flip hazard that produced the PR #6 and
+Nav-anchor incidents. After both PRs merge, tear down with `git
+worktree remove <path>`. Worktrees are ephemeral parallel-scaffolding,
+never a permanent part of the layout.
+
+**5. Scope discipline.** Out-of-scope items called out in a brief are
+not negotiable through reframing. If CC notices a related fix worth
+making, that becomes a separate PR — not expanded scope on the current
+one. The brief's "touch only" allowlist is the contract; surfacing a
+related issue as a question is correct, silently expanding the diff to
+include it is not.
+
 ## Working style
 
 - **Never second guess.** When given a clear instruction, execute it
