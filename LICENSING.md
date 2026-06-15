@@ -25,7 +25,7 @@ If you want to embed this software in a proprietary or closed-source product,
 or otherwise use it in ways the AGPL-3.0 does not permit, a separate
 commercial license is available.
 
-Contact: **TBD** (business contact to be set by the project owner).
+Contact: **licensing@porto.tools** (commercial-licensing enquiries).
 
 ## Third-party components
 
